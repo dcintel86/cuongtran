@@ -1,8 +1,15 @@
 package automation.core;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.openqa.selenium.Platform;
@@ -20,6 +27,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.mustache.Value;
 
 import com.automation.remarks.testng.GridInfoExtractor;
@@ -31,7 +39,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class DriverFactory {
 	static DesiredCapabilities capabilities = new DesiredCapabilities();
 	public static WebDriver driver = null;
-
+	static SessionId sessionid = null;
+	String testName = null;
+	
 	public static WebDriver getDriver() throws Exception {
 		String browserType = System.getProperty("browser", "firefox").toLowerCase();
 		String remote = System.getProperty("remote", "false").toLowerCase();
@@ -71,7 +81,7 @@ public class DriverFactory {
 			driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
 			if (driver == null)
 				driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
-     
+			sessionid = ((RemoteWebDriver)driver).getSessionId();
 			
 		} else {
 
@@ -114,11 +124,35 @@ public class DriverFactory {
 
 	}
 
+	@BeforeMethod
+	   public void handleTestMethodName(Method method)
+    {
+        testName = method.getName(); 
+    }
+	
 	@AfterClass
-	public void closeBrowser() {
+	public void closeBrowser() throws IOException {
 		if (driver != null) {
 			driver.quit();
 			driver = null;
+		}
+		
+		// File (or directory) with old name
+		File file = new File(System.getProperty("video.storage")+sessionid.toString()+".webm");
+
+		// File (or directory) with new name
+		File file3 = new File(System.getProperty("video.storage")+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+
+		if (file3.exists())
+			file3.delete();
+
+		// Rename file (or directory)
+		boolean success = file.renameTo(file3);
+		
+
+		if (!success) {
+		   // File was not successfully renamed
+			System.out.println("Unsuccesful");
 		}
 	}
 	
