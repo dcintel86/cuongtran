@@ -110,20 +110,13 @@
     	<scope>test</scope>
 	</dependency>
 	
-	<!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
-<dependency>
-    <groupId>com.codeborne</groupId>
-    <artifactId>selenide</artifactId>
-    <version>4.12.3</version>
-</dependency>
-
-<!-- Remote Video Recording for SeleniumGrid (Node) -->
-<!-- https://mvnrepository.com/artifact/com.aimmac23/selenium-video-node -->
-<dependency>
-    <groupId>com.aimmac23</groupId>
-    <artifactId>selenium-video-node</artifactId>
-    <version>2.7</version>
-</dependency>
+	<!-- Remote Video Recording for SeleniumGrid (Node) -->
+	<!-- https://mvnrepository.com/artifact/com.aimmac23/selenium-video-node -->
+	<dependency>
+    	<groupId>com.aimmac23</groupId>
+    	<artifactId>selenium-video-node</artifactId>
+    	<version>2.7</version>
+	</dependency>
 
 	
   </dependencies>

@@ -26,14 +26,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.mustache.Value;
 
-import com.automation.remarks.testng.GridInfoExtractor;
 import com.automation.remarks.video.recorder.VideoRecorder;
-import com.automation.remarks.testng.RemoteVideoListener;
-import com.codeborne.selenide.Configuration;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
@@ -41,12 +37,13 @@ public class DriverFactory {
 	public static WebDriver driver = null;
 	static SessionId sessionid = null;
 	String testName = null;
+	static String browserType = System.getProperty("browser", "firefox").toLowerCase();
+	static String remote = System.getProperty("remote", "false").toLowerCase();
+	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
+	static String version = System.getProperty("version","any").toLowerCase();
 	
 	public static WebDriver getDriver() throws Exception {
-		String browserType = System.getProperty("browser", "firefox").toLowerCase();
-		String remote = System.getProperty("remote", "false").toLowerCase();
-		String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
-		String version = System.getProperty("version","any").toLowerCase();
+
 
 		if (remote.equals("true")) {
 			URL SeleniumGridURL = null;
@@ -136,24 +133,29 @@ public class DriverFactory {
 			driver.quit();
 			driver = null;
 		}
+
 		
+		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
 		// File (or directory) with old name
 		File file = new File(System.getProperty("video.storage")+sessionid.toString()+".webm");
 
 		// File (or directory) with new name
-		File file3 = new File(System.getProperty("video.storage")+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+		File file_new = new File(System.getProperty("video.storage")+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
 
-		if (file3.exists())
-			file3.delete();
+		if (file_new.exists())
+			file_new.delete();
 
 		// Rename file (or directory)
-		boolean success = file.renameTo(file3);
+		boolean success = file.renameTo(file_new);
 		
 
 		if (!success) {
 		   // File was not successfully renamed
 			System.out.println("Unsuccesful");
-		}
+		}else
+			System.out.println("Failure remote video is stored at: "+ System.getProperty("video.storage")+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+		//********************************END OF RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node****************************************************
+
 	}
 	
 	//Init Browser
