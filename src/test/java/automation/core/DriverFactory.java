@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,6 +31,7 @@ import org.testng.annotations.BeforeMethod;
 
 import com.automation.remarks.video.recorder.VideoRecorder;
 
+import cucumber.deps.com.thoughtworks.xstream.io.path.Path;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
@@ -74,8 +76,7 @@ public class DriverFactory {
 				initChrome();
 				break;
 			}
-			// capabilities.setVersion(version);
-			driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
+			// capabilities.setVersion(version);	
 			if (driver == null)
 				driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
 			sessionid = ((RemoteWebDriver)driver).getSessionId();
@@ -122,9 +123,12 @@ public class DriverFactory {
 	}
 
 	@BeforeMethod
-	   public void handleTestMethodName(Method method)
-    {
+	   public void handleTestMethodName(Method method){
         testName = method.getName(); 
+        if (remote.equals("true")) {
+        	System.setProperty("video.enabled", "false");
+		}else
+			System.setProperty("video.enabled", "true");
     }
 	
 	@AfterClass
@@ -133,30 +137,34 @@ public class DriverFactory {
 			driver.quit();
 			driver = null;
 		}
-
 		
 		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
-		// File (or directory) with old name
-		File file = new File(System.getProperty("video.storage")+sessionid.toString()+".webm");
+		if (remote.equals("true")) {
+			// File (or directory) with old name
+			File file = new File(System.getProperty("video.storage")+ "\\" +sessionid.toString()+".webm");
 
-		// File (or directory) with new name
-		File file_new = new File(System.getProperty("video.storage")+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+			// File (or directory) with new name
+			File file_new = new File(System.getProperty("video.storage")+ "\\" +testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
 
-		if (file_new.exists())
-			file_new.delete();
+			if (file_new.exists())
+				file_new.delete();
 
-		// Rename file (or directory)
-		boolean success = file.renameTo(file_new);
+			// Rename file (or directory)
+			boolean success = file.renameTo(file_new);
+
+			//System.out.println(System.getProperty("java.io.tmpdir"));
+
+			if (!success) {
+			   // File was not successfully renamed
+				System.out.println("\"video.storage\" parameter must be set");
+			}else
+				System.out.println("Video is stored at: "+ System.getProperty("video.storage")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+			
+
+		}
+		}
 		
-
-		if (!success) {
-		   // File was not successfully renamed
-			System.out.println("Unsuccesful");
-		}else
-			System.out.println("Failure remote video is stored at: "+ System.getProperty("video.storage")+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
-		//********************************END OF RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node****************************************************
-
-	}
+		
 	
 	//Init Browser
 	public static void initChrome() {

@@ -10,9 +10,11 @@
   <name>cuongtran</name>
   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+<properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<maven.build.timestamp.format>yyyy_MM_dd-HHmm</maven.build.timestamp.format>
+</properties>
+  
 
   <dependencies>
 	<!-- https://mvnrepository.com/artifact/org.testng/testng -->
@@ -153,7 +155,7 @@
 								<seleniumHub>${seleniumHub}</seleniumHub>
 								<threadCnt>${threads}</threadCnt>
 								<desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
-								<!-- <reportDir>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</reportDir> -->
+								<reportDir>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</reportDir>
 							</systemPropertyVariables>
 							<!-- <reportsDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}/report</reportsDirectory> -->
 							
@@ -178,8 +180,29 @@
 							</execution>
 						</executions>
 					</plugin>
+					
 				</plugins>
 			</build>
+<!-- 			 <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.22.0</version>
+        <configuration>
+          <outputDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <outputDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</outputDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting> -->
 		</profile>
 	</profiles>
 </project>

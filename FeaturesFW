@@ -3,12 +3,12 @@
 	+ Firefox
 	+ Edge
 	+ IE
-- Generate report
+- Generate report in separate folder: {project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}
+- Capture failure screenshot
 - Execute by Maven configure file
 - SeleniumHub with multiple browser: Chrome, Firefox, Edge, IE
 - Automatically manage Selenium Driver by WebDriver library. Support: chrome, IE, FF, Edge
-- Video recording for failure TC with video-recorder-testng + video-recorder-core
-- Record Remote failure video for Selenium Grid with  selenium-video-node with option: video.storage
-	Setup environment: https://github.com/aimmac23/selenium-video-node/blob/master/INSTALLATION.md
+- Video recording for failure local TC with video-recorder-testng + video-recorder-core
+- Record Remote failure+pass video for Selenium Grid with  selenium-video-node with option: video.storage (Setup environment: https://github.com/aimmac23/selenium-video-node/blob/master/INSTALLATION.md)
 - Remove SLF4J: Failed to load class “org.slf4j.impl.StaticLoggerBinder” with slf4j-api + slf4j-log4j12 libraryy
 - Fixing log4j log properties with log4j.properties + log4j.xml in src/test/resources
