@@ -141,10 +141,10 @@ public class DriverFactory {
 		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
 		if (remote.equals("true")) {
 			// File (or directory) with old name
-			File file = new File(System.getProperty("video.storage")+ "\\" +sessionid.toString()+".webm");
+			File file = new File(System.getProperty("video.path")+ "\\" +sessionid.toString()+".webm");
 
 			// File (or directory) with new name
-			File file_new = new File(System.getProperty("video.storage")+ "\\" +testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+			File file_new = new File(System.getProperty("video.path")+ "\\" +testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
 
 			if (file_new.exists())
 				file_new.delete();
@@ -158,7 +158,7 @@ public class DriverFactory {
 			   // File was not successfully renamed
 				System.out.println("\"video.storage\" parameter must be set");
 			}else
-				System.out.println("Video is stored at: "+ System.getProperty("video.storage")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
+				System.out.println("Video is stored at: "+ System.getProperty("video.path")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
 			
 
 		}

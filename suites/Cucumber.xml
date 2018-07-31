@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name ="Test-Suite">
+	<listeners>
+		<listener class-name="automation.core.TestReport"/>
+	</listeners>
+	<test name ="Tool QA">
+	
+		<!-- <groups>
+		 <define name ="All">
+			
+				<include name ="Car" />
+				<include name ="Scooter" />
+			
+		 </define>
+		 <run>
+		 		<include name ="All" />
+		 	
+		 </run>
+		</groups> -->
+		
+		<parameter name="password" value="12345678x@X"/>
+		
+		<classes>
+			<class name ="cucumber.TestRunner.Runner" />
+		</classes>
+	</test>
+</suite>
