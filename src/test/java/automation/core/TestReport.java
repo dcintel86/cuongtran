@@ -80,7 +80,6 @@ public class TestReport extends TestListenerAdapter  {
             File screenShotdir = new File(screenshotDirectory);
             if (!screenShotdir.exists()) {
                 screenShotdir.mkdirs();
-                logger.info("Created screenshot folder at " + screenShotdir);
             }
             File screenshot = new File(screenshotAbsolutePath);
             if (createFile(screenshot)) {

@@ -44,6 +44,15 @@ public class DriverFactory {
 	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
 	static String version = System.getProperty("version","any").toLowerCase();
 	
+	public static void setDriver(WebDriver dr) {
+		driver = dr;
+	}
+
+	//Used to set driver to null for new browser
+	public static void setEmptyDriver() {
+		driver = null;
+	}
+	
 	public static WebDriver getDriver() throws Exception {
 
 
@@ -133,11 +142,6 @@ public class DriverFactory {
 	
 	@AfterClass
 	public void closeBrowser() throws IOException {
-		if (driver != null) {
-			driver.quit();
-			driver = null;
-		}
-		
 		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
 		if (remote.equals("true")) {
 			// File (or directory) with old name
@@ -160,8 +164,13 @@ public class DriverFactory {
 			}else
 				System.out.println("Video is stored at: "+ System.getProperty("video.path")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
 			
-
 		}
+		if (driver != null) {
+			driver.quit();
+			driver = null;
+		}
+		
+
 		}
 		
 		

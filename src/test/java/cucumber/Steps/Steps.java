@@ -1,9 +1,7 @@
 package cucumber.Steps;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 import automation.core.DriverFactory;
@@ -48,16 +46,12 @@ public class Steps extends DriverFactory{
 		driver.findElement(By.xpath("//*[@value ='Sign In']")).click();
 		Thread.sleep(1000);
 	}
-	@Then ("^Verify failure result$")
-	public void verify_failure_result() {
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]//preceding::td[2]")).getText().contains("The username or password is incorrect"));
+	@Then ("^Verify failure result contain text: \"([^\"]*)\"$")
+	public void verify_failure_result(String contain_text) {
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id='username']//preceding::td[2]")).getText().contains(contain_text));
 		System.out.println("Login Fail");
 	}
 	
-	@Then ("^Quit driver$")
-	public void quite_driver() {
-		driver.quit();
-	}
 	
 	
 }
