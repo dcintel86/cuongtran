@@ -16,12 +16,12 @@ import com.automation.remarks.video.annotations.Video;
 //user define
 import automation.core.DriverFactory;
 @Listeners(VideoListener.class)
-public class Session1 extends DriverFactory {
+public class Session1_RemoteVideoRecording extends DriverFactory {
 	
 	public static final Logger logger = LogManager.getLogger("Session1");
 	@Video
 	@Test
-	public void loginTMA() throws Exception {
+	public void RemoteVideoRecording() throws Exception {
 		//Print put: "Hello this is the first test case"
 		System.out.println("Hello this is the first test case");
 		

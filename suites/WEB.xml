@@ -2,6 +2,7 @@
 <suite name ="Test-Suite">
 	<listeners>
 		<listener class-name="automation.core.TestReport"/>
+		<listener class-name="automation.core.TestCreate"/>
 	</listeners>
 	<test name ="Tool QA">
 	
@@ -21,8 +22,9 @@
 		<parameter name="password" value="12345678x@X"/>
 		
 		<classes>
-			<class name ="recordingVideo.Session1" />
+			<class name ="recordingVideo.Session1_RemoteVideoRecording" />
 			<class name ="webAutomation.Session1" />
+			<class name ="webAutomation.Session1Fail" />
 		</classes>
 	</test>
 </suite>

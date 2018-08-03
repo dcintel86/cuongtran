@@ -66,7 +66,7 @@ public class Session1Fail extends DriverFactory {
 	
 	@Video
 	@Test
-	public void loginTMA() throws Exception {
+	public void loginTMAFail() throws Exception {
 		
 		//Print put: "Hello this is the first test case"
 		System.out.println("Hello this is the session review test case");
