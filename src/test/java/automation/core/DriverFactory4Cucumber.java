@@ -31,10 +31,12 @@ import org.testng.annotations.BeforeMethod;
 
 import com.automation.remarks.video.recorder.VideoRecorder;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.deps.com.thoughtworks.xstream.io.path.Path;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class DriverFactory {
+public class DriverFactory4Cucumber {
 	static DesiredCapabilities capabilities = new DesiredCapabilities();
 	public static WebDriver driver = null;
 	protected static SessionId sessionid = null;
@@ -43,7 +45,6 @@ public class DriverFactory {
 	static String remote = System.getProperty("remote", "false").toLowerCase();
 	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
 	static String version = System.getProperty("version","any").toLowerCase();
-	static String proxyIP = System.getProperty("proxy","10.10.10.10").toLowerCase();
 	
 	public static void setDriver(WebDriver dr) {
 		driver = dr;
@@ -54,7 +55,6 @@ public class DriverFactory {
 		driver = null;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static WebDriver getDriver() throws Exception {
 
 
@@ -115,36 +115,16 @@ public class DriverFactory {
 				}
 				break;
 			case "firefox":
-				if (driver == null ) {
-					if (!proxyIP.equals("na") ) {
-						org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
-						proxy.setHttpProxy(proxyIP + ":" + 8080);
-						DesiredCapabilities dc = DesiredCapabilities.firefox();
-						dc.setCapability(CapabilityType.PROXY, proxy);
-						WebDriverManager.firefoxdriver().arch64().setup();	
-						driver = new FirefoxDriver(dc);
-					} else {
-						WebDriverManager.firefoxdriver().arch64().setup();	
-						driver = new FirefoxDriver();
-
-					}
-
+				if (driver == null) {
+					WebDriverManager.firefoxdriver().arch64().setup();
+					driver = new FirefoxDriver();
 				}
 				break;
 
 			default:
-				if (driver == null ) {
-					if (proxyIP.equals("na") ) {
-						org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
-						proxy.setHttpProxy(proxyIP + ":" + 8080);
-						DesiredCapabilities dc = DesiredCapabilities.firefox();
-						dc.setCapability(CapabilityType.PROXY, proxy);
-						WebDriverManager.firefoxdriver().arch64().setup();	
-						driver = new FirefoxDriver(dc);
-					} else {
-						WebDriverManager.firefoxdriver().arch64().setup();	
-						driver = new FirefoxDriver();
-					}
+				if (driver == null) {
+					WebDriverManager.firefoxdriver().arch64().setup();
+					driver = new FirefoxDriver();
 				}
 				break;
 			}
@@ -154,48 +134,6 @@ public class DriverFactory {
 
 	}
 
-	@BeforeMethod
-	   public void handleTestMethodName(Method method){
-        testName = method.getName(); 
-        if (remote.equals("true")) {
-        	System.setProperty("video.enabled", "false");
-		}else
-			System.setProperty("video.enabled", "true");
-    }
-	
-	@AfterClass
-	public void closeBrowser() throws IOException {
-		
-		if (driver != null) {
-			driver.quit();
-			driver = null;
-		}
-		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
-				if (remote.equals("true")) {
-					// File (or directory) with old name
-					File file = new File(System.getProperty("video.path")+ "\\" +sessionid.toString()+".webm");
-		System.out.println(file);
-
-					// File (or directory) with new name
-					File file_new = new File(System.getProperty("video.path")+ "\\" +testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
-		System.out.println(file_new);
-					if (file_new.exists())
-						file_new.delete();
-
-					// Rename file (or directory)
-					boolean success = file.renameTo(file_new);
-
-					if (!success) {
-					   // File was not successfully renamed
-						System.out.println("Video cannot be renamed");
-					}else
-						System.out.println("Video is stored at: "+ System.getProperty("video.path")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
-					
-				}
-
-		}
-		
-		
 	
 	//Init Browser
 	public static void initChrome() {

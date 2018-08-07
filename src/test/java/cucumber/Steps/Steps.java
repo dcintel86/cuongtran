@@ -1,15 +1,19 @@
 package cucumber.Steps;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import automation.core.DriverFactory;
+import automation.core.DriverFactory4Cucumber;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class Steps extends DriverFactory{
+public class Steps extends DriverFactory4Cucumber{
 	
 	WebDriver driver;
 
@@ -21,7 +25,7 @@ public class Steps extends DriverFactory{
 	@Given ("^Open browser and launch the application$")
 	public void open_browser() throws Exception {
 		driver = getDriver();
-		driver.get("https://webmail.tma.com.vn/");
+		driver.get("http://demo.guru99.com/v4/");
 		driver.manage().window().fullscreen();
 	}
 
@@ -48,7 +52,9 @@ public class Steps extends DriverFactory{
 	}
 	@Then ("^Verify failure result contain text: \"([^\"]*)\"$")
 	public void verify_failure_result(String contain_text) {
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id='username']//preceding::td[2]")).getText().contains(contain_text));
+		new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
+		System.out.println(driver.switchTo().alert().getText().contains(contain_text));
+		Assert.assertTrue(driver.switchTo().alert().getText().contains(contain_text));
 		System.out.println("Login Fail");
 	}
 	

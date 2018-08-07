@@ -17,8 +17,8 @@ public class LoginPage {
 	}
 	
 	//Find Elements
-	@FindBy (id="username") private WebElement username;
-	@FindBy (id ="password") private WebElement password;
+	@FindBy (name="uid") private WebElement username;
+	@FindBy (name ="password") private WebElement password;
 	
 	//Methods
 	

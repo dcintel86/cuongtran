@@ -40,6 +40,7 @@ public class BaseCucumber extends DriverFactory{
 				recorder = RecorderFactory.getRecorder(VideoRecorder.conf().recorderType());
 				recorder.start();
 			}
+		 
 
 	}
 	
@@ -85,6 +86,7 @@ public class BaseCucumber extends DriverFactory{
 			{ doVideoProcessing(true, stopRecording(testMethodName));}
 
 		driver.quit();
+		driver.close();
 		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
 		if (remote.equals("true")) {
 			// File (or directory) with old name
