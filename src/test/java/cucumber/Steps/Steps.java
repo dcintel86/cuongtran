@@ -1,9 +1,8 @@
 package cucumber.Steps;
 
-import org.openqa.selenium.Alert;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -12,21 +11,32 @@ import automation.core.DriverFactory4Cucumber;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
-public class Steps extends DriverFactory4Cucumber{
+import automation.core.DriverFactory;
+public class Steps extends DriverFactory {
 	
 	WebDriver driver;
-
+	   
 	@Given ("^Open the Firefox and lauch the application$")
 	public void open_the_Firefox_and_launch_the_application() {
-    System.out.println("This Step open the Firefox and launch the application.");					
+    System.out.println("This Step open the Firefox and launch the application.");
+
 	}
 	
 	@Given ("^Open browser and launch the application$")
 	public void open_browser() throws Exception {
-		driver = getDriver();
-		driver.get("http://demo.guru99.com/v4/");
-		driver.manage().window().fullscreen();
+		try {
+			if (driver == null) {
+				driver = DriverFactory4Cucumber.getDriver();
+				setDriver(driver);
+				driver.get("http://demo.guru99.com/v4/");
+				driver.manage().window().fullscreen();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+
+		}
+
 	}
 
 	@When ("^Enter the Username and Password$")
@@ -47,17 +57,15 @@ public class Steps extends DriverFactory4Cucumber{
 	
 	@Then ("^Click credential$")
 	public void Reset_credential() throws InterruptedException {
-		driver.findElement(By.xpath("//*[@value ='Sign In']")).click();
-		Thread.sleep(1000);
+		driver.findElement(By.name("btnLogin")).click();
 	}
 	@Then ("^Verify failure result contain text: \"([^\"]*)\"$")
 	public void verify_failure_result(String contain_text) {
 		new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
-		System.out.println(driver.switchTo().alert().getText().contains(contain_text));
-		Assert.assertTrue(driver.switchTo().alert().getText().contains(contain_text));
+		Boolean result = (driver.switchTo().alert().getText().contains(contain_text));
+		driver.switchTo().alert().accept();
 		System.out.println("Login Fail");
+		Assert.assertTrue(result);
 	}
-	
-	
 	
 }

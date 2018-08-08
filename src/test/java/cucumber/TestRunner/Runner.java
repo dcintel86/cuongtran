@@ -9,8 +9,10 @@ public class Runner {
 	 * example of running multiple scenario or suit(feature) tags =
 	 * {"@org,@site,@site2"}
 	 */
-	plugin = { "pretty:target/cucumber/google-pretty.txt", "html:target/cucumber/google",
-			"json:target/cucumber/google.json", "junit:target/cucumber/google-results.xml" })
+	plugin = { "pretty:target/cucumber/google-pretty.txt", "html:target/cucumber/google", 
+			"json:target/cucumber/google.json", "junit:target/cucumber/google-results.xml" },
+	monochrome = true
+	)
 	public class Test extends AbstractTestNGCucumberTests{
 	}
 }

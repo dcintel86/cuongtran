@@ -8,6 +8,7 @@ import java.util.Date;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.Augmenter;
 
 import com.automation.remarks.video.recorder.VideoRecorder;
@@ -26,12 +27,10 @@ public class BaseCucumber extends DriverFactory{
 	private IVideoRecorder recorder;
 	static String remote = System.getProperty("remote", "false").toLowerCase();
 	static String scenarioName = null;
-
 	
 	@Before
 	public void beforeScenario(Scenario scenario) throws Exception{
 		scenarioName = scenario.getName(); 
-
 		System.setProperty("IsCucumber", "True");
 		 if (remote.equals("true")) {
 	        	System.setProperty("video.enabled", "false");
@@ -46,6 +45,7 @@ public class BaseCucumber extends DriverFactory{
 	
 	@After
 	public void afterScenario (Scenario scenario) throws Exception{
+		
 		Boolean result = scenario.isFailed();
 		String screenshotDirectory = System.getProperty("reportDir") + File.separator + "screenshots";
 		String browser = System.getProperty("browser", "Chrome");
@@ -56,14 +56,6 @@ public class BaseCucumber extends DriverFactory{
         File video = stopRecording(testMethodName);
 
 		if (result) {
-			WebDriver driver = null;
-			try {
-				driver = DriverFactory.getDriver();
-			} catch ( Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-
 			if (!screenShotdir.exists()) {
 				screenShotdir.mkdirs();
 			}
@@ -83,10 +75,9 @@ public class BaseCucumber extends DriverFactory{
             doVideoProcessing(false, stopRecording(testMethodName));
 
 		} else
-			{ doVideoProcessing(true, stopRecording(testMethodName));}
+			 doVideoProcessing(true, stopRecording(testMethodName));
 
-		driver.quit();
-		driver.close();
+
 		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
 		if (remote.equals("true")) {
 			// File (or directory) with old name
@@ -106,6 +97,9 @@ public class BaseCucumber extends DriverFactory{
 				System.out.println("Video is stored at: "+ System.getProperty("video.path")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
 			
 		}
+		
+		driver.quit();
+		setEmptyDriver();
 	}
 	
     private File stopRecording(String filename) {

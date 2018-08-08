@@ -1,23 +1,14 @@
 package automation.core;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
@@ -26,14 +17,8 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeMethod;
 
-import com.automation.remarks.video.recorder.VideoRecorder;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.deps.com.thoughtworks.xstream.io.path.Path;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory4Cucumber {
@@ -46,18 +31,8 @@ public class DriverFactory4Cucumber {
 	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
 	static String version = System.getProperty("version","any").toLowerCase();
 	
-	public static void setDriver(WebDriver dr) {
-		driver = dr;
-	}
-
-	//Used to set driver to null for new browser
-	public static void setEmptyDriver() {
-		driver = null;
-	}
-	
 	public static WebDriver getDriver() throws Exception {
-
-
+		driver = null;
 		if (remote.equals("true")) {
 			URL SeleniumGridURL = null;
 			try {
@@ -94,7 +69,6 @@ public class DriverFactory4Cucumber {
 
 			
 		} else {
-
 			switch (browserType) {
 			case "chrome":
 				if (driver == null) {
