@@ -3,8 +3,6 @@ package cucumber.Steps;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import automation.core.DriverFactory4Cucumber;
@@ -28,7 +26,7 @@ public class Steps extends DriverFactory {
 			if (driver == null) {
 				driver = DriverFactory4Cucumber.getDriver();
 				setDriver(driver);
-				driver.get("http://demo.guru99.com/v4/");
+				driver.get("https://webmail.tma.com.vn/");
 				driver.manage().window().fullscreen();
 			}
 		} catch (Exception e) {
@@ -57,14 +55,15 @@ public class Steps extends DriverFactory {
 	
 	@Then ("^Click credential$")
 	public void Reset_credential() throws InterruptedException {
-		driver.findElement(By.name("btnLogin")).click();
+		//driver.findElement(By.name("btnLogin")).click();
 	}
 	@Then ("^Verify failure result contain text: \"([^\"]*)\"$")
 	public void verify_failure_result(String contain_text) {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
-		Boolean result = (driver.switchTo().alert().getText().contains(contain_text));
-		driver.switchTo().alert().accept();
-		System.out.println("Login Fail");
+		//new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
+		//Boolean result = (driver.switchTo().alert().getText().contains(contain_text));
+		//driver.switchTo().alert().accept();
+		System.out.println("Verify TC");
+		Boolean result = (driver.findElement(By.xpath("//*[@id=\"ZLoginErrorPanel\"]/table/tbody/tr/td[2]")).getText().contains(contain_text));
 		Assert.assertTrue(result);
 	}
 	

@@ -22,5 +22,5 @@ Scenario: Enter login Credential and reset the value1.
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"
 	Then 	Click credential
-	Then 	Verify failure result contain text: "User or Password is not valid"
+	Then 	Verify failure result contain text: "The username or password is incorrect"
 	

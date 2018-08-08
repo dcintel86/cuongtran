@@ -1,14 +1,11 @@
 package cucumber.Steps;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.Augmenter;
 
 import com.automation.remarks.video.recorder.VideoRecorder;
@@ -46,7 +43,6 @@ public class BaseCucumber extends DriverFactory{
 	@After
 	public void afterScenario (Scenario scenario) throws Exception{
 		
-		Boolean result = scenario.isFailed();
 		String screenshotDirectory = System.getProperty("reportDir") + File.separator + "screenshots";
 		String browser = System.getProperty("browser", "Chrome");
 		String testMethodName = scenario.getName();
@@ -55,13 +51,16 @@ public class BaseCucumber extends DriverFactory{
 		File screenshot = new File(screenshotAbsolutePath);
         File video = stopRecording(testMethodName);
 
-		if (result) {
+    
+        if (scenario.getStatus().equals("failed")) {
 			if (!screenShotdir.exists()) {
 				screenShotdir.mkdirs();
 			}
 			if (TestReport.createFile(screenshot)) {
+				
 				try {
 					TestReport.writeScreenshotToFile(driver, screenshot);
+	                logger.info("Written screenshot to " + screenshotAbsolutePath);
 				} catch (ClassCastException weNeedToAugmentOurDriverObject) {
 					// TODO: handle exception
 					TestReport.writeScreenshotToFile(new Augmenter().augment(driver), screenshot);
@@ -69,13 +68,11 @@ public class BaseCucumber extends DriverFactory{
 				}
 			} else {
                 logger.error("Unable to create " + screenshotAbsolutePath);
-
 			}
-            video = stopRecording(testMethodName);
-            doVideoProcessing(false, stopRecording(testMethodName));
+            doVideoProcessing(false, video);
 
 		} else
-			 doVideoProcessing(true, stopRecording(testMethodName));
+			 doVideoProcessing(true, video);
 
 
 		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
@@ -116,7 +113,7 @@ public class BaseCucumber extends DriverFactory{
             return filePath;
         } else if (video != null) {
             video.delete();
-            logger.info("No video on success test");
+            logger.info("Recording video has been removed since TC passed");
         }
         return "";
     }

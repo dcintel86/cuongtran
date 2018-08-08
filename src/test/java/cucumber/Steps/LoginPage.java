@@ -17,14 +17,17 @@ public class LoginPage {
 	}
 	
 	//Find Elements
-	@FindBy (name="uid") private WebElement username;
-	@FindBy (name ="password") private WebElement password;
+	@FindBy (id="username") private WebElement username;
+	@FindBy (id ="password") private WebElement password;
+	//@FindBy (name="uid") private WebElement username;
+	//@FindBy (name ="password") private WebElement password;
 	
 	//Methods
 	
 	public LoginPage LoginWith(String user, String pass) {
 		username.sendKeys(user);
 		password.sendKeys(pass);
+		password.submit();
 	return this;
 	
 	}
