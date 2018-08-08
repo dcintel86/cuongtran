@@ -25,7 +25,6 @@ import org.openqa.selenium.remote.SessionId;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
@@ -36,26 +35,25 @@ public class DriverFactory {
 	static String browserType = System.getProperty("browser", "firefox").toLowerCase();
 	static String remote = System.getProperty("remote", "false").toLowerCase();
 	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
-	static String version = System.getProperty("version","any").toLowerCase();
-	static String proxyIP = System.getProperty("proxy","10.10.10.10").toLowerCase();
-	
+	static String version = System.getProperty("version", "any").toLowerCase();
+	static String proxyIP = System.getProperty("proxy", "na").toLowerCase();
+
 	public static void setDriver(WebDriver dr) {
 		driver = dr;
 	}
 
-	//Used to set driver to null for new browser
+	// Used to set driver to null for new browser
 	public static void setEmptyDriver() {
 		driver = null;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static WebDriver getDriver() throws Exception {
-
 
 		if (remote.equals("true")) {
 			URL SeleniumGridURL = null;
 			try {
-				SeleniumGridURL = new URL (seleniumHub);
+				SeleniumGridURL = new URL(seleniumHub);
 			} catch (MalformedURLException e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -76,17 +74,16 @@ public class DriverFactory {
 			case "edge":
 				initEdge();
 				break;
-				
+
 			default:
 				initChrome();
 				break;
 			}
-			// capabilities.setVersion(version);	
+			// capabilities.setVersion(version);
 			if (driver == null)
 				driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
-			sessionid = ((RemoteWebDriver)driver).getSessionId();
+			sessionid = ((RemoteWebDriver) driver).getSessionId();
 
-			
 		} else {
 
 			switch (browserType) {
@@ -109,16 +106,16 @@ public class DriverFactory {
 				}
 				break;
 			case "firefox":
-				if (driver == null ) {
-					if (!proxyIP.equals("na") ) {
+				if (driver == null) {
+					if (!proxyIP.equals("na")) {
 						org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
 						proxy.setHttpProxy(proxyIP + ":" + 8080);
 						DesiredCapabilities dc = DesiredCapabilities.firefox();
 						dc.setCapability(CapabilityType.PROXY, proxy);
-						WebDriverManager.firefoxdriver().arch64().setup();	
+						WebDriverManager.firefoxdriver().arch64().setup();
 						driver = new FirefoxDriver(dc);
 					} else {
-						WebDriverManager.firefoxdriver().arch64().setup();	
+						WebDriverManager.firefoxdriver().arch64().setup();
 						driver = new FirefoxDriver();
 
 					}
@@ -127,16 +124,16 @@ public class DriverFactory {
 				break;
 
 			default:
-				if (driver == null ) {
-					if (proxyIP.equals("na") ) {
+				if (driver == null) {
+					if (proxyIP.equals("na")) {
 						org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
 						proxy.setHttpProxy(proxyIP + ":" + 8080);
 						DesiredCapabilities dc = DesiredCapabilities.firefox();
 						dc.setCapability(CapabilityType.PROXY, proxy);
-						WebDriverManager.firefoxdriver().arch64().setup();	
+						WebDriverManager.firefoxdriver().arch64().setup();
 						driver = new FirefoxDriver(dc);
 					} else {
-						WebDriverManager.firefoxdriver().arch64().setup();	
+						WebDriverManager.firefoxdriver().arch64().setup();
 						driver = new FirefoxDriver();
 					}
 				}
@@ -149,74 +146,73 @@ public class DriverFactory {
 	}
 
 	@BeforeMethod
-	   public void handleTestMethodName(Method method){
-        testName = method.getName(); 
-        if (remote.equals("true")) {
-        	System.setProperty("video.enabled", "false");
-		}else
+	public void handleTestMethodName(Method method) {
+		testName = method.getName();
+		if (remote.equals("true")) {
+			System.setProperty("video.enabled", "false");
+		} else
 			System.setProperty("video.enabled", "true");
-    }
-	
+	}
+
 	@AfterClass
 	public void closeBrowser() throws IOException {
-		
 
-		//********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node<****************************************************
-				if (remote.equals("true")) {
-					// File (or directory) with old name
-					File file = new File(System.getProperty("video.path")+ "\\" +sessionid.toString()+".webm");
-		System.out.println(file);
-
-					// File (or directory) with new name
-					File file_new = new File(System.getProperty("video.path")+ "\\" +testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
-		System.out.println(file_new);
-					if (file_new.exists())
-						file_new.delete();
-
-					// Rename file (or directory)
-					boolean success = file.renameTo(file_new);
-
-					if (!success) {
-					   // File was not successfully renamed
-						System.out.println("Video cannot be renamed");
-					}else
-						System.out.println("Video is stored at: "+ System.getProperty("video.path")+"\\"+testName+"_"+new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())+".webm");
-					
-				}
-				if (driver != null) {
-					driver.quit();
-					driver = null;
-				}
+		if (driver != null) {
+			driver.quit();
+			driver = null;
 		}
-		
-		
-	
-	//Init Browser
+
+		// ********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID
+		// WITH selenium-video-node<****************************************************
+		if (remote.equals("true")) {
+			// File (or directory) with old name
+			File file = new File(System.getProperty("video.path") + "\\" + sessionid.toString() + ".webm");
+			// File (or directory) with new name
+			File file_new = new File(System.getProperty("video.path") + "\\" + testName + "_"
+					+ new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()) + ".webm");
+			if (file_new.exists())
+				file_new.delete();
+
+			// Rename file (or directory)
+			boolean success = file.renameTo(file_new);
+
+			if (!success) {
+				// File was not successfully renamed
+				System.out.println("Video cannot be renamed");
+			} else
+				System.out.println("Video is stored at: " + System.getProperty("video.path") + "\\" + testName + "_"
+						+ new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()) + ".webm");
+
+		}
+
+	}
+
+	// Init Browser
 	public static void initChrome() {
-        capabilities.setCapability("chrome.switches", Arrays.asList("--no-default-browser-check"));
-        capabilities.setCapability("chrome.switches", Arrays.asList("--disable-extensions"));
-        HashMap<String, String> chromePreferences = new HashMap<String, String>();
-        chromePreferences.put("profile.password_manager_enabled", "false");
-        capabilities.setCapability("chrome.prefs", chromePreferences);
+		capabilities.setCapability("chrome.switches", Arrays.asList("--no-default-browser-check"));
+		capabilities.setCapability("chrome.switches", Arrays.asList("--disable-extensions"));
+		HashMap<String, String> chromePreferences = new HashMap<String, String>();
+		chromePreferences.put("profile.password_manager_enabled", "false");
+		capabilities.setCapability("chrome.prefs", chromePreferences);
 	}
-	
+
 	public static void initFirefox() throws Exception {
-        ProfilesIni profilesIni = new ProfilesIni();
-        FirefoxProfile profile = profilesIni.getProfile("John");
-        capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+		ProfilesIni profilesIni = new ProfilesIni();
+		FirefoxProfile profile = profilesIni.getProfile("John");
+		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 	}
-	
+
 	public static void initIE() throws Exception {
 		capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
 		capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-        capabilities.setCapability("requireWindowFocus", true);
-        capabilities.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
+		capabilities.setCapability("requireWindowFocus", true);
+		capabilities.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
 		capabilities.setBrowserName("internet explorer");
 	}
-	
+
 	public static void initEdge() throws Exception {
 		capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
-        capabilities.setCapability("requireWindowFocus", true);
+		capabilities.setCapability("requireWindowFocus", true);
 		capabilities.setBrowserName("MicrosoftEdge");
 	}
 

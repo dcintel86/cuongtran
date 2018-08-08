@@ -1,144 +1,144 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>tma.com</groupId>
-  <artifactId>cuongtran</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>tma.com</groupId>
+	<artifactId>cuongtran</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>cuongtran</name>
-  <url>http://maven.apache.org</url>
+	<name>cuongtran</name>
+	<url>http://maven.apache.org</url>
 
-<properties>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<maven.build.timestamp.format>yyyy_MM_dd-HHmm</maven.build.timestamp.format>
-</properties>
-  
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>yyyy_MM_dd-HHmm</maven.build.timestamp.format>
+	</properties>
 
-  <dependencies>
-	<!-- https://mvnrepository.com/artifact/org.testng/testng -->
-	<dependency>
-    	<groupId>org.testng</groupId>
-    	<artifactId>testng</artifactId>
-    	<version>6.14.3</version>
-    	<scope>test</scope>
-	</dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-	<dependency>
-    	<groupId>org.seleniumhq.selenium</groupId>
-    	<artifactId>selenium-java</artifactId>
-   	 <version>3.13.0</version>
-	</dependency>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.14.3</version>
+			<scope>test</scope>
+		</dependency>
 
-	<!-- Cucumber Libs -->
-	<dependency>
-	    <groupId>info.cukes</groupId>
-	    <artifactId>cucumber-java</artifactId>
-	    <version>1.2.5</version>
-	    <scope>test</scope>
-	</dependency>
-		
-	<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-testng -->
-	<dependency>
-	    <groupId>info.cukes</groupId>
-	    <artifactId>cucumber-testng</artifactId>
-	    <version>1.2.5</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
-	<dependency>
-		<groupId>log4j</groupId>
-		<artifactId>log4j</artifactId>
-		<version>1.2.17</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
-	<dependency>
-		<groupId>org.apache.logging.log4j</groupId>
-		<artifactId>log4j-api</artifactId>
-		<version>2.11.0</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-core</artifactId>
-	    <version>2.11.0</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
-	<dependency>
-    	<groupId>io.github.bonigarcia</groupId>
-    	<artifactId>webdrivermanager</artifactId>
-    	<version>2.2.4</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder-core -->
-	<dependency>
-    	<groupId>com.automation-remarks</groupId>
-    	<artifactId>video-recorder-core</artifactId>
-    	<version>1.8</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder-testng -->
-	<dependency>
-	    <groupId>com.automation-remarks</groupId>
-	    <artifactId>video-recorder-testng</artifactId>
-	    <version>1.8</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.13.0</version>
+		</dependency>
 
-	<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder -->
-	<dependency>
-    	<groupId>com.automation-remarks</groupId>
-    	<artifactId>video-recorder</artifactId>
-    	<version>1.0.2</version>
-	</dependency>
-	
+		<!-- Cucumber Libs -->
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.5</version>
+			<scope>test</scope>
+		</dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-	<dependency>
-   	 	<groupId>org.slf4j</groupId>
-  	  	<artifactId>slf4j-api</artifactId>
-    	<version>1.7.25</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-	<dependency>
-    	<groupId>org.slf4j</groupId>
-    	<artifactId>slf4j-log4j12</artifactId>
-    	<version>1.7.25</version>
-    	<scope>test</scope>
-	</dependency>
-	
-	<!-- Remote Video Recording for SeleniumGrid (Node) -->
-	<!-- https://mvnrepository.com/artifact/com.aimmac23/selenium-video-node -->
-	<dependency>
-    	<groupId>com.aimmac23</groupId>
-    	<artifactId>selenium-video-node</artifactId>
-    	<version>2.7</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-testng -->
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>1.2.5</version>
+		</dependency>
 
-	<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
-	<dependency>
-    	<groupId>info.cukes</groupId>
-    	<artifactId>cucumber-core</artifactId>
-    	<version>1.2.5</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
-	<!-- Read/Write Excel -->
-	<dependency>
-    	<groupId>net.sourceforge.jexcelapi</groupId>
-    	<artifactId>jxl</artifactId>
-    	<version>2.6.12</version>
-	</dependency>
-	
-	
-	
-  </dependencies>
-  <!-- Plugins -->
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder-core -->
+		<dependency>
+			<groupId>com.automation-remarks</groupId>
+			<artifactId>video-recorder-core</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder-testng -->
+		<dependency>
+			<groupId>com.automation-remarks</groupId>
+			<artifactId>video-recorder-testng</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder -->
+		<dependency>
+			<groupId>com.automation-remarks</groupId>
+			<artifactId>video-recorder</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Remote Video Recording for SeleniumGrid (Node) -->
+		<!-- https://mvnrepository.com/artifact/com.aimmac23/selenium-video-node -->
+		<dependency>
+			<groupId>com.aimmac23</groupId>
+			<artifactId>selenium-video-node</artifactId>
+			<version>2.7</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
+		<!-- Read/Write Excel -->
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+
+
+
+	</dependencies>
+	<!-- Plugins -->
 	<profiles>
 		<profile>
 			<id>selenium-tests</id>
@@ -171,10 +171,10 @@
 								<seleniumHub>${seleniumHub}</seleniumHub>
 								<threadCnt>${threads}</threadCnt>
 								<desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
-								<reportDir>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</reportDir>
+								<reportDir>${project.basedir}\report\${suite}\${browser}_${maven.build.timestamp}</reportDir>
 							</systemPropertyVariables>
 							<!-- <reportsDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}/report</reportsDirectory> -->
-							
+
 							<suiteXmlFiles>
 								<suiteXmlFile>suites/${suite}.xml</suiteXmlFile>
 							</suiteXmlFiles>
@@ -196,29 +196,16 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 				</plugins>
 			</build>
-<!-- 			 <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>2.22.0</version>
-        <configuration>
-          <outputDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</outputDirectory>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>2.1</version>
-        <configuration>
-          <outputDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</outputDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting> -->
+			<!-- <reporting> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-surefire-report-plugin</artifactId> <version>2.22.0</version> 
+				<configuration> <outputDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</outputDirectory> 
+				</configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-site-plugin</artifactId> <version>2.1</version> <configuration> 
+				<outputDirectory>${project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}</outputDirectory> 
+				</configuration> </plugin> </plugins> </reporting> -->
 		</profile>
 	</profiles>
 </project>

@@ -9,7 +9,7 @@ Scenario: Verification of Reset button
 	Then Reset the credential	
 	
 @Reset1
-Scenario: Enter login Credential and reset the value.
+Scenario: Login fail1
 
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"
@@ -17,7 +17,23 @@ Scenario: Enter login Credential and reset the value.
 	Then 	Verify failure result contain text: "test"
 	
 @Reset1
-Scenario: Enter login Credential and reset the value1.
+Scenario: Login Pass2
+
+	Given 	Open browser and launch the application
+	When 	Enter user: "tessdasst" and password: "password"
+	Then 	Click credential
+	Then 	Verify failure result contain text: "The username or password is incorrect"
+
+@Reset1
+Scenario: Login fail3
+
+	Given 	Open browser and launch the application
+	When 	Enter user: "tessdasst" and password: "password"
+	Then 	Click credential
+	Then 	Verify failure result contain text: "test"
+	
+@Reset1
+Scenario: Login Pass4
 
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"

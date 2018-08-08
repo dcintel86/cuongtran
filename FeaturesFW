@@ -4,11 +4,13 @@
 	+ Edge
 	+ IE
 - Generate report in separate folder: {project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}
-- Capture failure screenshot
+- Capture failure screenshot for Cucumber + Web (remote + local)
 - Execute by Maven configure file
 - SeleniumHub with multiple browser: Chrome, Firefox, Edge, IE
 - Automatically manage Selenium Driver by WebDriver library. Support: chrome, IE, FF, Edge
 - Video recording for failure local TC with video-recorder-testng + video-recorder-core
+- Video recording for Cucumber for local + remote
 - Record Remote failure+pass video for Selenium Grid with  selenium-video-node with option: video.storage (Setup environment: https://github.com/aimmac23/selenium-video-node/blob/master/INSTALLATION.md)
 - Remove SLF4J: Failed to load class “org.slf4j.impl.StaticLoggerBinder” with slf4j-api + slf4j-log4j12 libraryy
 - Fixing log4j log properties with log4j.properties + log4j.xml in src/test/resources
+- Proxy for Firefox; Edge+Chrome+IE set proxy manually

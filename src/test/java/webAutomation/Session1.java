@@ -17,49 +17,50 @@ import automation.core.DriverFactory;
 
 @Listeners(VideoListener.class)
 public class Session1 extends DriverFactory {
-	
+
 	public static final Logger logger = LogManager.getLogger("Session1");
-	
-	@Video 
+
+	@Video
 	@Test
 	public void loginTMA() throws Exception {
-		//Print put: "Hello this is the first test case"
+		// Print put: "Hello this is the first test case"
 		System.out.println("Hello this is the first test case");
-		
-		//Open browser, chrome/firefox depends on Maven configuration file
+
+		// Open browser, chrome/firefox depends on Maven configuration file
 		WebDriver driver = getDriver();
-		
-		//Maximum browser
+
+		// Maximum browser
 		driver.manage().window().maximize();
-		
-		//Navigate browser to open website: "https://webmail.tma.com.vn"
+
+		// Navigate browser to open website: "https://webmail.tma.com.vn"
 		driver.get("https://webmail.tma.com.vn");
-		
-		//Logs a message with level INFO on this logger
+
+		// Logs a message with level INFO on this logger
 		logger.info("Open Web mail TMA");
-		
-		//Find Element by name
+
+		// Find Element by name
 		WebElement username = driver.findElement(By.name("username"));
-		//Send "Yourname" to the element: username
+		// Send "Yourname" to the element: username
 		username.sendKeys("Yourname");
-		
+
 		WebElement password = driver.findElement(By.xpath("//*[@id=\'password\']"));
 		password.sendKeys("YourPassword");
 		Thread.sleep(200);
-		
-		//From element: password, submit Login form
+
+		// From element: password, submit Login form
 		password.submit();
 		Thread.sleep(500);
-		
-		//Verify the current URL equals to "https://webmail.tma.com.vn/" in case of failure login
+
+		// Verify the current URL equals to "https://webmail.tma.com.vn/" in case of
+		// failure login
 		Assert.assertTrue(driver.getCurrentUrl().equals("https://webmail.tma.com.vn/"));
-		
-		//Verify the current URL equals to "https://webmail.tma.com.vn/#1" in case of successful login
-		//Assert.assertTrue(driver.getCurrentUrl().equals("https://webmail.tma.com.vn/#1"));
-		
+
+		// Verify the current URL equals to "https://webmail.tma.com.vn/#1" in case of
+		// successful login
+		// Assert.assertTrue(driver.getCurrentUrl().equals("https://webmail.tma.com.vn/#1"));
+
 		Thread.sleep(1000);
 		System.out.println("Login TMA");
 	}
 
-	
 }
