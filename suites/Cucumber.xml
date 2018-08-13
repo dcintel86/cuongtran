@@ -21,7 +21,7 @@
 		<parameter name="password" value="12345678x@X"/>
 		
 		<classes>
-			<class name ="cucumber.TestRunner.Runner" />
+			<class name ="cucumber.TestRunner.Runner_CucumberAPI" />
 		</classes>
 	</test>
 </suite>
