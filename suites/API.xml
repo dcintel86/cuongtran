@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name ="Test-Suite">
+	<listeners>
+<!-- 		<listener class-name="automation.core.TestReport"/>
+		<listener class-name="automation.core.TestCreate"/> -->
+	</listeners>
+	<test name ="API">
+	
+		<!-- <groups>
+		 <define name ="All">
+			
+				<include name ="Car" />
+				<include name ="Scooter" />
+			
+		 </define>
+		 <run>
+		 		<include name ="All" />
+		 	
+		 </run>
+		</groups> -->
+		
+		<parameter name="password" value="12345678x@X"/>
+		
+		<classes>
+			<class name ="apiTesting.SignIn_Action" />
+		</classes>
+	</test>
+</suite>

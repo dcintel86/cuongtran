@@ -14,3 +14,6 @@
 - Remove SLF4J: Failed to load class “org.slf4j.impl.StaticLoggerBinder” with slf4j-api + slf4j-log4j12 libraryy
 - Fixing log4j log properties with log4j.properties + log4j.xml in src/test/resources
 - Proxy for Firefox; Edge+Chrome+IE set proxy manually
+
+- Cucumber API testing with GET, POST example with library io.rest-assured 
+- Data Driven FW for Microsoft Documents, LIBRARY: org.apache.poi 
