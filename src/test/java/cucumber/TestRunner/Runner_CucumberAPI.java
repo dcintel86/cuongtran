@@ -5,7 +5,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 public class Runner_CucumberAPI {
 	@CucumberOptions(features = "src/test/java/cucumber/Features/CucumberAPI.feature", glue = "cucumber.Steps", tags = {
-			"@GET_METHOD" },
+			"@feature" },
 			/*
 			 * example of running multiple scenario or suit(feature) tags =
 			 * {"@org,@site,@site2"}
