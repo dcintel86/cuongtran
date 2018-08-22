@@ -5,24 +5,8 @@
 		<listener class-name="automation.core.TestCreate"/> -->
 	</listeners>
 	<test name ="API">
-	
-		<!-- <groups>
-		 <define name ="All">
-			
-				<include name ="Car" />
-				<include name ="Scooter" />
-			
-		 </define>
-		 <run>
-		 		<include name ="All" />
-		 	
-		 </run>
-		</groups> -->
-		
-		<parameter name="password" value="12345678x@X"/>
-		
 		<classes>
-			<class name ="apiTesting.SignIn_Action" />
+			<class name ="restAPI.RestAPI" />
 		</classes>
 	</test>
 </suite>
