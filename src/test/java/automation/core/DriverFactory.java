@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -25,6 +27,9 @@ import org.openqa.selenium.remote.SessionId;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
@@ -37,6 +42,8 @@ public class DriverFactory {
 	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
 	static String version = System.getProperty("version", "any").toLowerCase();
 	static String proxyIP = System.getProperty("proxy", "na").toLowerCase();
+	static String urlAppium = System.getProperty("urlAppium","127.0.0.1").toLowerCase();
+	static String orientation = System.getProperty("orientation", "false").toLowerCase();
 
 	public static void setDriver(WebDriver dr) {
 		driver = dr;
@@ -51,16 +58,14 @@ public class DriverFactory {
 	public static WebDriver getDriver() throws Exception {
 
 		if (remote.equals("true")) {
-			URL SeleniumGridURL = null;
-			try {
-				SeleniumGridURL = new URL(seleniumHub);
-			} catch (MalformedURLException e) {
-				// TODO: handle exception
-				e.printStackTrace();
+			
+			if (!browserType.equals("iossafari") & !browserType.equals("androidchrome") & !browserType.equals("safari")) {
+				capabilities.setBrowserName(browserType);
+				capabilities.setPlatform(Platform.WINDOWS);
+				capabilities.setVersion(version);
 			}
-			capabilities.setBrowserName(browserType);
-			capabilities.setPlatform(Platform.WINDOWS);
-			capabilities.setVersion(version);
+
+			
 			switch (browserType) {
 			case "chrome":
 				initChrome();
@@ -74,15 +79,49 @@ public class DriverFactory {
 			case "edge":
 				initEdge();
 				break;
+			case "safari":
+				initSafari();
+				break;
+			case "androidchrome":
+				initAndroidChrome();
+				break;
+			case "iossafari":
+				initIos();
+				break;
 
 			default:
 				initChrome();
 				break;
 			}
 			// capabilities.setVersion(version);
-			if (driver == null)
-				driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
-			sessionid = ((RemoteWebDriver) driver).getSessionId();
+		
+			
+			//Connect to Appium or SeleniumGrid
+			if (driver == null) {
+				if (browserType.equals("androidchrome")) {
+					URL urlAppiumAndroid = new URL(urlAppium);
+					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+					driver = new AppiumDriver(urlAppiumAndroid, capabilities);
+				}
+				if (browserType.equals("iossafari")) {
+					URL urlAppiumIos = new URL (urlAppium);
+					driver = new IOSDriver<>(urlAppiumIos, capabilities);
+					driver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
+				}
+				if (!browserType.equals("androidchrome") & !browserType.equals("iossafari")) {
+					URL SeleniumGridURL = null;
+					try {
+						SeleniumGridURL = new URL(seleniumHub);
+					} catch (MalformedURLException e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+					driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
+				}
+				sessionid = ((RemoteWebDriver) driver).getSessionId();
+
+				
+			}
 
 		} else {
 
@@ -162,9 +201,8 @@ public class DriverFactory {
 			driver = null;
 		}
 
-		// ********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID
-		// WITH selenium-video-node<****************************************************
-		if (remote.equals("true")) {
+		// ********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node FOR WEB AUTOMATION****************************************************
+		if (remote.equals("true") & !browserType.equals("androidchrome") & !browserType.equals("iossafari")) {
 			// File (or directory) with old name
 			File file = new File(System.getProperty("video.path") + "\\" + sessionid.toString() + ".webm");
 			// File (or directory) with new name
@@ -215,5 +253,47 @@ public class DriverFactory {
 		capabilities.setCapability("requireWindowFocus", true);
 		capabilities.setBrowserName("MicrosoftEdge");
 	}
-
+	public static void initSafari() throws Exception {
+		capabilities.setBrowserName("safari");
+		capabilities.setPlatform(Platform.MAC);
+	}
+	public static void initAndroidChrome() throws Exception {
+		switch (orientation) {
+		case "true":
+			capabilities.setCapability("orientation", "LANDSCAPE");
+			break;
+		default:
+			capabilities.setCapability("orientation", "PORTRAIT");
+			break;
+		}
+		capabilities.setBrowserName("chrome");
+		capabilities.setPlatform(Platform.ANDROID);
+		capabilities.setCapability("deviceName", "any");
+	}
+	
+	public static void initIos() throws Exception{
+		String iosDeviceName = System.getProperty("iosDeviceName", "any");
+		String iosVersion = System.getProperty("iosVersion", "any");
+		String UDID = System.getProperty("UDID", "any");
+		switch (orientation) {
+		case "true":
+			capabilities.setCapability("orientation", "LANDSCAPE");
+			break;
+		default:
+			capabilities.setCapability("orientation", "PORTRAIT");
+			break;
+		}
+		capabilities.setCapability("platformName", "iOS");
+		capabilities.setCapability("platformVersion", iosVersion);
+		capabilities.setCapability("udid", UDID);
+		capabilities.setCapability("deviceName", iosDeviceName);
+		capabilities.setCapability(CapabilityType.BROWSER_NAME, "safari");
+		capabilities.setCapability("automationName", "XCUITest");
+		capabilities.setCapability("showXcodeLog", true);
+		capabilities.setCapability("launchActivity", "old.SplashActivity");
+		capabilities.setCapability("newCommandTimeout", 120000);
+		capabilities.setCapability("webkitResponseTimeout", 60000);
+		capabilities.setCapability("nativeWebTap", true);
+	}
+	
 }
