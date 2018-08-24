@@ -3,25 +3,13 @@
 	<listeners>
 		<!-- <listener class-name="automation.core.TestReport"/> -->
 	</listeners>
-	<test name ="Tool QA">
-	
-		<!-- <groups>
-		 <define name ="All">
-			
-				<include name ="Car" />
-				<include name ="Scooter" />
-			
-		 </define>
-		 <run>
-		 		<include name ="All" />
-		 	
-		 </run>
-		</groups> -->
+	<test name ="Cuong Tran">
 		
 		<parameter name="password" value="12345678x@X"/>
 		
 		<classes>
-			<class name ="appium.Session1" />
+			<class name ="appium.AndroidWeb" /> 
+			<!-- <class name ="appium.AndroidWeb" /> -->
 		</classes>
 	</test>
 </suite>

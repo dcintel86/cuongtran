@@ -30,6 +30,7 @@ import org.testng.annotations.BeforeMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
@@ -39,12 +40,16 @@ public class DriverFactory {
 	public String testName = null;
 	static String browserType = System.getProperty("browser", "firefox").toLowerCase();
 	static String remote = System.getProperty("remote", "false").toLowerCase();
-	static String seleniumHub = System.getProperty("seleniumHub", "none").toLowerCase();
+	static String seleniumHub = System.getProperty("seleniumHub", "127.0.0.1").toLowerCase();
 	static String version = System.getProperty("version", "any").toLowerCase();
 	static String proxyIP = System.getProperty("proxy", "na").toLowerCase();
 	static String urlAppium = System.getProperty("urlAppium","127.0.0.1").toLowerCase();
 	static String orientation = System.getProperty("orientation", "false").toLowerCase();
-
+	static String deviceName = System.getProperty("deviceName", "any").toLowerCase();
+	static String platformVersion = System.getProperty("platformVersion","any").toLowerCase();
+	static String apkName = System.getProperty("apkName","any").toLowerCase();
+	static String appPackage = System.getProperty("appPackage","any");
+	static String appActivity = System.getProperty("appActivity","any");
 	public static void setDriver(WebDriver dr) {
 		driver = dr;
 	}
@@ -85,6 +90,9 @@ public class DriverFactory {
 			case "androidchrome":
 				initAndroidChrome();
 				break;
+			case "androidapp":
+				initAndroidApp();
+				break;
 			case "iossafari":
 				initIos();
 				break;
@@ -103,12 +111,17 @@ public class DriverFactory {
 					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
 					driver = new AppiumDriver(urlAppiumAndroid, capabilities);
 				}
+				if (browserType.equals("androidapp")) {
+					URL urlAppiumAndroid = new URL(urlAppium);
+					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+					driver = new AppiumDriver(urlAppiumAndroid, capabilities);
+				}
 				if (browserType.equals("iossafari")) {
 					URL urlAppiumIos = new URL (urlAppium);
 					driver = new IOSDriver<>(urlAppiumIos, capabilities);
 					driver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
 				}
-				if (!browserType.equals("androidchrome") & !browserType.equals("iossafari")) {
+				if (!browserType.equals("androidchrome") & !browserType.equals("iossafari") & !browserType.equals("androidapp")) {
 					URL SeleniumGridURL = null;
 					try {
 						SeleniumGridURL = new URL(seleniumHub);
@@ -202,7 +215,7 @@ public class DriverFactory {
 		}
 
 		// ********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node FOR WEB AUTOMATION****************************************************
-		if (remote.equals("true") & !browserType.equals("androidchrome") & !browserType.equals("iossafari")) {
+		if (remote.equals("true") & !browserType.equals("androidchrome") & !browserType.equals("iossafari") & !browserType.equals("androidapp")) {
 			// File (or directory) with old name
 			File file = new File(System.getProperty("video.path") + "\\" + sessionid.toString() + ".webm");
 			// File (or directory) with new name
@@ -269,6 +282,17 @@ public class DriverFactory {
 		capabilities.setBrowserName("chrome");
 		capabilities.setPlatform(Platform.ANDROID);
 		capabilities.setCapability("deviceName", "any");
+		
+	}
+	public static void initAndroidApp() throws Exception {
+		File app = new File("data" +File.separator+ "AndroidAPK", apkName);
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
+		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
+		capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+		capabilities.setCapability("appPackage", appPackage);
+		capabilities.setCapability("appActivity", appActivity);
+
 	}
 	
 	public static void initIos() throws Exception{
