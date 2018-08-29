@@ -30,12 +30,15 @@ import org.testng.annotations.BeforeMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 	static DesiredCapabilities capabilities = new DesiredCapabilities();
 	public static WebDriver driver = null;
+	public static AndroidDriver driver_androidDriver = null;
+
 	protected static SessionId sessionid = null;
 	public String testName = null;
 	static String browserType = System.getProperty("browser", "firefox").toLowerCase();
@@ -101,8 +104,6 @@ public class DriverFactory {
 				initChrome();
 				break;
 			}
-			// capabilities.setVersion(version);
-		
 			
 			//Connect to Appium or SeleniumGrid
 			if (driver == null) {
@@ -196,6 +197,43 @@ public class DriverFactory {
 		return driver;
 
 	}
+	//For Android Driver
+	public static AndroidDriver getDriver_Appium() throws Exception {
+
+		if (remote.equals("true")) {
+			
+			switch (browserType) {
+			case "androidchrome":
+				initAndroidChrome();
+				break;
+			case "androidapp":
+				initAndroidApp();
+				break;
+
+			default:
+				initAndroidChrome();
+				break;
+			}
+			
+			//Connect to Appium or SeleniumGrid
+			if (driver_androidDriver == null) {
+				if (browserType.equals("androidchrome")) {
+					URL urlAppiumAndroid = new URL(urlAppium);
+					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+					driver_androidDriver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+				}
+				if (browserType.equals("androidapp")) {
+					URL urlAppiumAndroid = new URL(urlAppium);
+					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+					driver_androidDriver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+				}
+			}
+
+		}
+
+		return driver_androidDriver;
+
+	}
 
 	@BeforeMethod
 	public void handleTestMethodName(Method method) {
@@ -212,6 +250,10 @@ public class DriverFactory {
 		if (driver != null) {
 			driver.quit();
 			driver = null;
+		}
+		if (driver_androidDriver != null) {
+			driver_androidDriver.quit();
+			driver_androidDriver = null;
 		}
 
 		// ********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node FOR WEB AUTOMATION****************************************************
@@ -285,11 +327,13 @@ public class DriverFactory {
 		
 	}
 	public static void initAndroidApp() throws Exception {
-		File app = new File("data" +File.separator+ "AndroidAPK", apkName);
+		if (!apkName.equals("any")) {
+			File app = new File("data" +File.separator+ "AndroidAPK", apkName);
+			capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+		}
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
 		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
-		capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
 		capabilities.setCapability("appPackage", appPackage);
 		capabilities.setCapability("appActivity", appActivity);
 

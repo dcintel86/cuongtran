@@ -3,13 +3,15 @@
 	<listeners>
 		<!-- <listener class-name="automation.core.TestReport"/> -->
 	</listeners>
-	<test name ="Cuong Tran">
+	<test name ="Appium Suite">
 		
 		<parameter name="password" value="12345678x@X"/>
 		
 		<classes>
-			<class name ="appium.AndroidWeb" /> 
-			<!-- <class name ="appium.AndroidWeb" /> -->
+			 <class name ="appium.AndroidApp_Lazada" />  
+			<!-- <class name ="appium.AndroidApp_Calculator" />  -->
+			<!-- <class name ="appium.AndroidWeb" />  -->
+			
 		</classes>
 	</test>
 </suite>

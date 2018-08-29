@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import automation.core.DriverFactory;
 
-public class AndroidApp extends DriverFactory{
+public class AndroidApp_Calculator extends DriverFactory{
 	
 	@Test
 	private void Calculator() throws Exception {
