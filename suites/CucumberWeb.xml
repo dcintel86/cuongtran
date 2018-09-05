@@ -1,8 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name ="Test-Suite">
 	<listeners>
-		<listener class-name="automation.core.TestReport"/>
-		<listener class-name="automation.core.TestCreate"/>
+		<!-- <listener class-name="automation.core.TestReport"/> -->
 	</listeners>
 	<test name ="Tool QA">
 	
@@ -22,9 +21,7 @@
 		<parameter name="password" value="12345678x@X"/>
 		
 		<classes>
-			<!-- <class name ="recordingVideo.Session1_RemoteVideoRecording" /> -->
-			 <class name ="webAutomation.Session1" />
-			<class name ="webAutomation.Session1Fail" />
+			<class name ="cucumber.TestRunner.Runner_CucumberWeb" />
 		</classes>
 	</test>
 </suite>

@@ -38,8 +38,11 @@ public class BaseCucumber extends DriverFactory4Cucumber {
 			System.setProperty("video.enabled", "false");
 		} else {
 			// System.setProperty("video.enabled", "true");
-			recorder = RecorderFactory.getRecorder(VideoRecorder.conf().recorderType());
-			recorder.start();
+			if (!browserType.equals("api")) {
+				recorder = RecorderFactory.getRecorder(VideoRecorder.conf().recorderType());
+				recorder.start();
+			}
+			
 		}
 
 	}

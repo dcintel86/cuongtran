@@ -25,7 +25,7 @@ public class AndroidApp_Lazada extends DriverFactory{
 	@Test
 	public void SignIn() throws Exception {
 		logger.info("Lazada Shopping");
-		AndroidDriver<?> driver = getDriver_Appium();
+		AndroidDriver<?> driver = getDriver_Android();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
 		//Select target app

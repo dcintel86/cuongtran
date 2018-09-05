@@ -38,6 +38,8 @@ public class DriverFactory {
 	static DesiredCapabilities capabilities = new DesiredCapabilities();
 	public static WebDriver driver = null;
 	public static AndroidDriver driver_androidDriver = null;
+	public static IOSDriver driver_iOSDriver = null;
+
 
 	protected static SessionId sessionid = null;
 	public String testName = null;
@@ -67,7 +69,7 @@ public class DriverFactory {
 
 		if (remote.equals("true")) {
 			
-			if (!browserType.equals("iossafari") & !browserType.equals("androidchrome") & !browserType.equals("safari")) {
+			if (!browserType.equals("safari")) {
 				capabilities.setBrowserName(browserType);
 				capabilities.setPlatform(Platform.WINDOWS);
 				capabilities.setVersion(version);
@@ -90,15 +92,6 @@ public class DriverFactory {
 			case "safari":
 				initSafari();
 				break;
-			case "androidchrome":
-				initAndroidChrome();
-				break;
-			case "androidapp":
-				initAndroidApp();
-				break;
-			case "iossafari":
-				initIos();
-				break;
 
 			default:
 				initChrome();
@@ -107,31 +100,14 @@ public class DriverFactory {
 			
 			//Connect to Appium or SeleniumGrid
 			if (driver == null) {
-				if (browserType.equals("androidchrome")) {
-					URL urlAppiumAndroid = new URL(urlAppium);
-					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
-					driver = new AppiumDriver(urlAppiumAndroid, capabilities);
+				URL SeleniumGridURL = null;
+				try {
+					SeleniumGridURL = new URL(seleniumHub);
+				} catch (MalformedURLException e) {
+					// TODO: handle exception
+					e.printStackTrace();
 				}
-				if (browserType.equals("androidapp")) {
-					URL urlAppiumAndroid = new URL(urlAppium);
-					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
-					driver = new AppiumDriver(urlAppiumAndroid, capabilities);
-				}
-				if (browserType.equals("iossafari")) {
-					URL urlAppiumIos = new URL (urlAppium);
-					driver = new IOSDriver<>(urlAppiumIos, capabilities);
-					driver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
-				}
-				if (!browserType.equals("androidchrome") & !browserType.equals("iossafari") & !browserType.equals("androidapp")) {
-					URL SeleniumGridURL = null;
-					try {
-						SeleniumGridURL = new URL(seleniumHub);
-					} catch (MalformedURLException e) {
-						// TODO: handle exception
-						e.printStackTrace();
-					}
-					driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
-				}
+				driver = new RemoteWebDriver(SeleniumGridURL, capabilities);
 				sessionid = ((RemoteWebDriver) driver).getSessionId();
 
 				
@@ -146,7 +122,7 @@ public class DriverFactory {
 					driver = new ChromeDriver();
 				}
 				break;
-			case "ie":
+			case "ie":  //Uncheck "Enable Protected Mode" for both Internet and Restricted site in Security tab in Internet Options of IE
 				if (driver == null) {
 					WebDriverManager.iedriver().arch32().setup();
 					driver = new InternetExplorerDriver();
@@ -158,6 +134,7 @@ public class DriverFactory {
 					driver = new EdgeDriver();
 				}
 				break;
+				
 			case "firefox":
 				if (driver == null) {
 					if (!proxyIP.equals("na")) {
@@ -198,7 +175,7 @@ public class DriverFactory {
 
 	}
 	//For Android Driver
-	public static AndroidDriver getDriver_Appium() throws Exception {
+	public static AndroidDriver getDriver_Android() throws Exception {
 
 		if (remote.equals("true")) {
 			
@@ -215,7 +192,7 @@ public class DriverFactory {
 				break;
 			}
 			
-			//Connect to Appium or SeleniumGrid
+			//Connect to Appium 
 			if (driver_androidDriver == null) {
 				if (browserType.equals("androidchrome")) {
 					URL urlAppiumAndroid = new URL(urlAppium);
@@ -234,6 +211,34 @@ public class DriverFactory {
 		return driver_androidDriver;
 
 	}
+	//Connect to iOSsafari
+	public static IOSDriver getDriver_iOS() throws Exception {
+
+		if (remote.equals("true")) {
+	
+			switch (browserType) {
+			case "iossafari":
+				initIos();
+				break;
+
+			default:
+				initIos();
+				break;
+			}
+			
+			//Connect to Appium
+			if (driver_iOSDriver == null) {
+				if (browserType.equals("iossafari")) {
+					URL urlAppiumIos = new URL (urlAppium);
+					driver_iOSDriver = new IOSDriver<>(urlAppiumIos, capabilities);
+					driver_iOSDriver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
+				}
+
+			}
+		}
+		return driver_iOSDriver;
+	}
+
 
 	@BeforeMethod
 	public void handleTestMethodName(Method method) {

@@ -6,7 +6,7 @@
 - Generate report in separate folder: {project.basedir}/report/${suite}/${browser}_${maven.build.timestamp}
 - Capture failure screenshot for Cucumber + Web (remote + local)
 - Execute by Maven configure file
-- SeleniumHub with multiple browser: Chrome, Firefox, Edge, IE
+- SeleniumHub with multiple browser: Chrome, Firefox, Edge, IE, Safari
 - Automatically manage Selenium Driver by WebDriver library. Support: chrome, IE, FF, Edge
 - Video recording for failure local TC with video-recorder-testng + video-recorder-core
 - Video recording for Cucumber for local + remote
@@ -17,3 +17,4 @@
 
 - Cucumber API testing with GET, POST example with library io.rest-assured 
 - Data Driven FW for Microsoft Documents, LIBRARY: org.apache.poi 
+- Safari on MAC
