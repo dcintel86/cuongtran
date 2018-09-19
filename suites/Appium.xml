@@ -8,10 +8,10 @@
 		<parameter name="password" value="12345678x@X"/>
 		
 		<classes>
-			 <class name ="appium.AndroidApp_Lazada" />  
-			<!-- <class name ="appium.AndroidApp_Calculator" />  -->
-			<!-- <class name ="appium.AndroidWeb" />  -->
-			
+			<!-- <class name ="appium.iOSWeb" />   -->
+			<!--  <class name ="appium.AndroidApp_Calculator" />  -->
+			 <class name ="appium.AndroidWeb" />  
+		
 		</classes>
 	</test>
 </suite>

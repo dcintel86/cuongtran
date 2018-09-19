@@ -38,7 +38,7 @@ public class DriverFactory {
 	static DesiredCapabilities capabilities = new DesiredCapabilities();
 	public static WebDriver driver = null;
 	public static AndroidDriver driver_androidDriver = null;
-	public static IOSDriver driver_iOSDriver = null;
+	public static IOSDriver<?> driver_iOSDriver = null;
 
 
 	protected static SessionId sessionid = null;
@@ -260,6 +260,10 @@ public class DriverFactory {
 			driver_androidDriver.quit();
 			driver_androidDriver = null;
 		}
+		if (driver_iOSDriver != null) {
+			driver_iOSDriver.quit();
+			driver_iOSDriver = null;
+		}
 
 		// ********************************FOR RECORDING REMOTE VIDEO IN SELENIUM GRID WITH selenium-video-node FOR WEB AUTOMATION****************************************************
 		if (remote.equals("true") & !browserType.equals("androidchrome") & !browserType.equals("iossafari") & !browserType.equals("androidapp")) {
@@ -356,11 +360,11 @@ public class DriverFactory {
 			capabilities.setCapability("orientation", "PORTRAIT");
 			break;
 		}
-		capabilities.setCapability("platformName", "iOS");
-		capabilities.setCapability("platformVersion", iosVersion);
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, iosVersion);
 		capabilities.setCapability("udid", UDID);
-		capabilities.setCapability("deviceName", iosDeviceName);
-		capabilities.setCapability(CapabilityType.BROWSER_NAME, "safari");
+		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, iosDeviceName);
+		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
 		capabilities.setCapability("automationName", "XCUITest");
 		capabilities.setCapability("showXcodeLog", true);
 		capabilities.setCapability("launchActivity", "old.SplashActivity");

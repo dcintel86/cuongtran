@@ -9,13 +9,16 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import automation.core.DriverFactory;
+import io.appium.java_client.android.AndroidDriver;
 
 public class AndroidApp_Calculator extends DriverFactory{
 	
 	@Test
 	private void Calculator() throws Exception {
-		System.out.println("Hello this is Androi App TC");
-		WebDriver driver = getDriver();
+		System.out.println("Hello this is Android App TC");
+		AndroidDriver<?> driver = getDriver_Android();
+		
+
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Thread.sleep(500);
 		

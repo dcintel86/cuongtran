@@ -26,7 +26,7 @@ public class AndroidWeb extends DriverFactory {
 		System.out.println("Hello this is the Android Web automation");
 
 		// Open browser, chrome/firefox depends on Maven configuration file
-		WebDriver driver = getDriver();
+		WebDriver driver = getDriver_Android();
 
 		// Navigate browser to open website: "https://webmail.tma.com.vn"
 		driver.get("https://webmail.tma.com.vn");
