@@ -24,7 +24,7 @@ public class iOSWeb extends DriverFactory {
 	@Test
 	public void loginTMA() throws Exception {
 		// Print put: "Hello this is the first test case"
-		System.out.println("Hello this is the Android Web automation");
+		System.out.println("Hello this is the iOS Web automation");
 
 		// Open browser, chrome/firefox   on Maven configuration file
 		AppiumDriver driver = getDriver_iOS();
@@ -33,6 +33,7 @@ public class iOSWeb extends DriverFactory {
 		WebElement div = driver.findElement(By.id("i_am_an_id"));
 		Assert.assertEquals("I am a div", div.getText()); //check the text retrieved matches expected value
 		driver.findElement(By.id("comments")).sendKeys("My comment"); //populate the comments field by id.
+		Thread.sleep(5000);
 	}
 
 }

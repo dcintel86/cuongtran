@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name ="Test-Suite">
+	<listeners>
+		<!-- <listener class-name="automation.core.TestReport"/> -->
+	</listeners>
+	<test name ="Appium Suite">
+		
+		<parameter name="password" value="12345678x@X"/>
+		
+		<classes>
+			  <class name ="appium.AndroidWeb" />  
+		
+		</classes>
+	</test>
+</suite>

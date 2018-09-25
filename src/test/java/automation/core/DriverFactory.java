@@ -46,7 +46,7 @@ public class DriverFactory {
 	static String browserType = System.getProperty("browser", "firefox").toLowerCase();
 	static String remote = System.getProperty("remote", "false").toLowerCase();
 	static String seleniumHub = System.getProperty("seleniumHub", "127.0.0.1").toLowerCase();
-	static String version = System.getProperty("version", "any").toLowerCase();
+	static String version = System.getProperty("version", "any");
 	static String proxyIP = System.getProperty("proxy", "na").toLowerCase();
 	static String urlAppium = System.getProperty("urlAppium","127.0.0.1").toLowerCase();
 	static String orientation = System.getProperty("orientation", "false").toLowerCase();

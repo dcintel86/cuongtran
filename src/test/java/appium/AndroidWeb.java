@@ -53,7 +53,7 @@ public class AndroidWeb extends DriverFactory {
 		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"ZLoginErrorPanel\"]/table/tbody/tr/td[2]")).getText().contains("The username or password is incorrect"));
 
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 		System.out.println("Login TMA");
 	}
 
