@@ -38,7 +38,7 @@ public class DriverFactory {
 	static DesiredCapabilities capabilities = new DesiredCapabilities();
 	public static WebDriver driver = null;
 	public static AndroidDriver driver_androidDriver = null;
-	public static IOSDriver<?> driver_iOSDriver = null;
+	public static IOSDriver driver_iOSDriver = null;
 
 
 	protected static SessionId sessionid = null;
@@ -196,19 +196,17 @@ public class DriverFactory {
 			if (driver_androidDriver == null) {
 				if (browserType.equals("androidchrome")) {
 					URL urlAppiumAndroid = new URL(urlAppium);
-					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
 					driver_androidDriver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
 				}
 				if (browserType.equals("androidapp")) {
 					URL urlAppiumAndroid = new URL(urlAppium);
-					//driver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
-					driver_androidDriver = new AndroidDriver<>(urlAppiumAndroid, capabilities);
+					driver_androidDriver = new AndroidDriver(urlAppiumAndroid, capabilities);
 				}
 			}
 
 		}
 
-		return driver_androidDriver;
+		return  driver_androidDriver;
 
 	}
 	//Connect to iOSsafari
@@ -230,7 +228,7 @@ public class DriverFactory {
 			if (driver_iOSDriver == null) {
 				if (browserType.equals("iossafari")) {
 					URL urlAppiumIos = new URL (urlAppium);
-					driver_iOSDriver = new IOSDriver<>(urlAppiumIos, capabilities);
+					driver_iOSDriver = new IOSDriver(urlAppiumIos, capabilities);
 					driver_iOSDriver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
 				}
 
@@ -330,10 +328,12 @@ public class DriverFactory {
 			capabilities.setCapability("orientation", "PORTRAIT");
 			break;
 		}
-		capabilities.setBrowserName("chrome");
-		capabilities.setPlatform(Platform.ANDROID);
-		capabilities.setCapability("deviceName", "any");
-		
+
+		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "chrome");
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.0.0");
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
+		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "any");
+		capabilities.setCapability(MobileCapabilityType.BROWSER_VERSION, version);
 	}
 	public static void initAndroidApp() throws Exception {
 		if (!apkName.equals("any")) {
@@ -364,13 +364,7 @@ public class DriverFactory {
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, iosVersion);
 		capabilities.setCapability("udid", UDID);
 		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, iosDeviceName);
-		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
-		capabilities.setCapability("automationName", "XCUITest");
-		capabilities.setCapability("showXcodeLog", true);
-		capabilities.setCapability("launchActivity", "old.SplashActivity");
-		capabilities.setCapability("newCommandTimeout", 120000);
-		capabilities.setCapability("webkitResponseTimeout", 60000);
-		capabilities.setCapability("nativeWebTap", true);
+		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
 	}
 	
 }
