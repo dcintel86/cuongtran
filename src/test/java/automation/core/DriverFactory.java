@@ -340,7 +340,7 @@ public class DriverFactory {
 			File app = new File("data" +File.separator+ "AndroidAPK", apkName);
 			capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
 		}
-		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
 		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
 		capabilities.setCapability("appPackage", appPackage);
