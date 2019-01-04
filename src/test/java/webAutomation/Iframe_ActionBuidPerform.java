@@ -47,6 +47,9 @@ import automation.core.DriverFactory;
 				//Press 3 buttons in parallel
 				Actions builder = new Actions(driver);
 				builder.keyDown(Keys.CONTROL).click(one).click(three).click(five).keyUp(Keys.CONTROL);
+				Thread.sleep(1000);
+				builder.click(three).pause(500).click(five).pause(500).click(one).pause(500).build().perform();
+
 				
 				//Generate composite action
 				Action compositeAction = builder.build();
