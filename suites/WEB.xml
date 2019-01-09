@@ -25,7 +25,7 @@
 			<!-- <class name ="recordingVideo.Session1_RemoteVideoRecording" /> -->
 <!-- 			 <class name ="webAutomation.Session1" />
 			<class name ="webAutomation.Session1Fail" /> -->
-			<class name ="webAutomation.Iframe_ActionBuidPerform" />
+			<class name ="webAutomation.DragAndDrop" />
 		</classes>
 	</test>
 </suite>
