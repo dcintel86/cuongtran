@@ -17,7 +17,7 @@ import com.automation.remarks.video.annotations.Video;
 import automation.core.DriverFactory;
 
 @Listeners(VideoListener.class)
-public class DragAndDrop extends DriverFactory {
+public class DragAndDrop2 extends DriverFactory {
 
 	public static final Logger logger = LogManager.getLogger("Drag and Drop");
 
@@ -25,7 +25,7 @@ public class DragAndDrop extends DriverFactory {
 	@Test
 	public void loginTMA() throws Exception {
 		// Print put: "Drag and Drop"
-		System.out.println("Drag and Drop using clickAndHold of Action");
+		System.out.println("Drag and Drop using dragAndDrop of Action");
 
 		// Open browser, chrome/firefox depends on Maven configuration file
 		WebDriver driver = getDriver();
@@ -38,11 +38,12 @@ public class DragAndDrop extends DriverFactory {
 
 		// Logs a message with level INFO on this logger
 		logger.info("Open Web site demo");
-
+		
 		WebElement srcEle = driver.findElement(By.xpath("//a[normalize-space()='BANK']"));
 		WebElement destEle = driver.findElement(By.xpath("//*[normalize-space()='DEBIT SIDE']/following::li[1]"));
+		
 		Actions draganddrop = new Actions(driver);
-		draganddrop.clickAndHold(srcEle).release(destEle).build().perform();
+		draganddrop.dragAndDrop(srcEle, destEle).build().perform();
 		Thread.sleep(2000);
 	}
 
