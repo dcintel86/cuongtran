@@ -118,7 +118,7 @@ public class DriverFactory {
 			switch (browserType) {
 			case "chrome":
 				if (driver == null) {
-					WebDriverManager.chromedriver().setup();
+					WebDriverManager.chromedriver().version("76.0.3809.68").setup();
 					driver = new ChromeDriver();
 				}
 				break;

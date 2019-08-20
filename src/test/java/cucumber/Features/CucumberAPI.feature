@@ -15,7 +15,7 @@ Feature: Get book by ISBN
     Then verify status code is "200"
 
 
-@POST_METHOD
-	Scenario: Modify Request Parameter
-	Given Insert URI: "http://restapi.demoqa.com/customer/register" and location for json file: "data\JSON\JsonData"
-	Then Verify the response with key: "FaultId" and its value: "User already exists"
+#@POST_METHOD
+#	Scenario: Modify Request Parameter
+#	Given Insert URI: "http://restapi.demoqa.com/customer/register" and location for json file: "data\JSON\JsonData"
+#	Then Verify the response with key: "FaultId" and its value: "User already exists"

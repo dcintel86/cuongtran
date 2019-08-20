@@ -13,7 +13,6 @@ Scenario: Login fail1
 
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"
-	Then 	Click credential
 	Then 	Verify failure result contain text: "test"
 	
 @Reset1
@@ -21,7 +20,6 @@ Scenario: Login Pass2
 
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"
-	Then 	Click credential
 	Then 	Verify failure result contain text: "The username or password is incorrect"
 
 @Reset1
@@ -29,7 +27,6 @@ Scenario: Login fail3
 
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"
-	Then 	Click credential
 	Then 	Verify failure result contain text: "test"
 	
 @Reset1
@@ -37,6 +34,5 @@ Scenario: Login Pass4
 
 	Given 	Open browser and launch the application
 	When 	Enter user: "tessdasst" and password: "password"
-	Then 	Click credential
 	Then 	Verify failure result contain text: "The username or password is incorrect"
 	

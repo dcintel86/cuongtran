@@ -8,12 +8,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 
 import automation.core.DriverFactory;
 
+@Listeners(VideoListener.class)
 public class WebDriverNavigate extends DriverFactory{
 	
 	public static final Logger logger = LogManager.getLogger("Web Navigation");
